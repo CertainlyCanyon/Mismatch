@@ -1,34 +1,16 @@
 [gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://Prongs/Scripts/Prong.gd" type="Script" id=1]
-[ext_resource path="res://Prongs/Sprites/ProngMiddle.png" type="Texture" id=2]
-[ext_resource path="res://Prongs/Sprites/ProngEdge.png" type="Texture" id=3]
-
-[sub_resource type="GDScript" id=1]
-
-script/source = "extends Area2D
-
-# class member variables go here, for example:
-# var a = 2
-# var b = \"textvar\"
-
-func _ready():
-	# Called when the node is added to the scene for the first time.
-	# Initialization here
-	pass
-
-#func _process(delta):
-#	# Called every frame. Delta is time since last frame.
-#	# Update game logic here.
-#	pass
-"
+[ext_resource path="res://Pause.gd" type="Script" id=2]
+[ext_resource path="res://Prongs/Sprites/ProngMiddle.png" type="Texture" id=3]
+[ext_resource path="res://Prongs/Sprites/ProngEdge.png" type="Texture" id=4]
 
 [sub_resource type="RectangleShape2D" id=2]
 
 custom_solver_bias = 0.0
 extents = Vector2( 10, 10 )
 
-[node name="Prong" type="Position2D"]
+[node name="Prong" type="Position2D" index="0"]
 
 script = ExtResource( 1 )
 
@@ -41,24 +23,24 @@ linear_damp = 0.1
 angular_damp = 1.0
 audio_bus_override = false
 audio_bus_name = "Master"
-script = SubResource( 1 )
+script = ExtResource( 2 )
 
 [node name="Middle" type="Sprite" parent="Sprite" index="0"]
 
-texture = ExtResource( 2 )
+texture = ExtResource( 3 )
 _sections_unfolded = [ "Offset" ]
 
 [node name="Top" type="Sprite" parent="Sprite" index="1"]
 
-texture = ExtResource( 3 )
+texture = ExtResource( 4 )
 
 [node name="Left" type="Sprite" parent="Sprite" index="2"]
 
-texture = ExtResource( 3 )
+texture = ExtResource( 4 )
 
 [node name="Right" type="Sprite" parent="Sprite" index="3"]
 
-texture = ExtResource( 3 )
+texture = ExtResource( 4 )
 
 [node name="Collision" type="CollisionShape2D" parent="Sprite" index="4"]
 
@@ -66,6 +48,8 @@ visible = false
 shape = SubResource( 2 )
 
 [node name="Shapes" type="Node" parent="." index="1"]
+
+script = ExtResource( 2 )
 
 [connection signal="input_event" from="Sprite" to="." method="_on_Sprite_input_event"]
 
