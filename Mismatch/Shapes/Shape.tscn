@@ -5,6 +5,7 @@
 [node name="Shape" type="Sprite"]
 
 script = ExtResource( 1 )
+_sections_unfolded = [ "Offset" ]
 
 [node name="Tween" type="Tween" parent="." index="0"]
 

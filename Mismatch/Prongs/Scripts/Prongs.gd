@@ -3,28 +3,48 @@ extends Sprite
 const prong = preload("res://Prongs/Prong.tscn")
 const shape = preload("res://Shapes/Shape.tscn")
 
-var number_of_prongs = 4
+var number_of_prongs = 3
 var width
-var pause = false
+var pause = true
+
+var shape_width = 0
 
 var current_shape
-var next_shape
 
-var next_shape_pos =  Vector2(-500, -400)
+var next_box
 
-func _ready():
-	randomize()
-	position = Vector2(OS.window_size.x/2, OS.window_size.y/2)
+func reset(number):
+	if(current_shape != null):
+		current_shape.get_parent().remove_child(current_shape)
+		current_shape.free()
+	for p in get_node("Prongs").get_children():
+		p.queue_free()
+		
+	for s in get_node("Shapes").get_children():
+		s.queue_free()
+	
+	if number == -1:
+		number_of_prongs += 1
+	else:
+		number_of_prongs = number
 	
 	width = get_texture().get_width() * sin(PI/number_of_prongs) #width of the new prong to make the "square star"
 	
 	current_shape = create_shape()
 	current_shape.set_active(true)
-	next_shape = create_shape()
-	next_shape.position = next_shape_pos
+	current_shape.pause(true, null)
+	
+	next_box = get_parent().get_node("interface").get_node("NextContainer").get_node("Sprite")
+	next_box.next(width)
 	
 	generate_prongs(number_of_prongs)
 
+func _ready():
+	randomize()
+	position = Vector2(OS.window_size.x/2, OS.window_size.y/2)
+	
+	reset(number_of_prongs)
+	
 func _process(delta):
 	# Called every frame. Delta is time since last frame.
 	if(!pause):
@@ -47,14 +67,14 @@ func get_current_shape():
 	return current_shape
 
 func next_shape(from): #releases current node to a prong and rotates the next node in
-	current_shape = next_shape;
-	next_shape = create_shape()
+	current_shape = next_box.get_shape();
+	reparent(current_shape, self)
+	next_box.next(width)
 	
 	if(!weakref(current_shape).get_ref()):
 		current_shape = create_shape()
 	current_shape.set_active(true)
 	current_shape.position = get_node("Shapes").position
-	next_shape.position = next_shape_pos
 	
 func reparent(node, parent): # re-parents a shape to the prong it was shot at
 	node.get_parent().remove_child(node)
@@ -63,7 +83,7 @@ func reparent(node, parent): # re-parents a shape to the prong it was shot at
 	
 func create_shape():
 	var n_shape = shape.instance()
-	n_shape.init(width)
+	shape_width = n_shape.init(width)
 	get_node("Shapes").add_child(n_shape)
 	return n_shape
 	

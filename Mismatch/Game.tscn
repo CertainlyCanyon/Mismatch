@@ -1,14 +1,314 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=17 format=2]
 
 [ext_resource path="res://Game.gd" type="Script" id=1]
 [ext_resource path="res://Prongs/Prongs.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Interface/interface.gd" type="Script" id=3]
+[ext_resource path="res://Fonts/Score_Theme.tres" type="Theme" id=4]
+[ext_resource path="res://Interface/Score.gd" type="Script" id=5]
+[ext_resource path="res://Fonts/Win_Lose_Theme.tres" type="Theme" id=6]
+[ext_resource path="res://Interface/WinLose.gd" type="Script" id=7]
+[ext_resource path="res://Interface/RetryButton.gd" type="Script" id=8]
+[ext_resource path="res://Interface/RetryIcon.png" type="Texture" id=9]
+[ext_resource path="res://Interface/NextButton.gd" type="Script" id=10]
+[ext_resource path="res://Interface/NextIcon.png" type="Texture" id=11]
+[ext_resource path="res://Interface/Next_Container.png" type="Texture" id=12]
+[ext_resource path="res://Interface/Next_Box.gd" type="Script" id=13]
+[ext_resource path="res://Prongs/pixel_material.tres" type="Material" id=14]
+[ext_resource path="res://Shader_Rect.gd" type="Script" id=15]
 
-[node name="Game" type="Node"]
+[sub_resource type="Animation" id=1]
+
+resource_name = "Change_Score"
+length = 0.11
+loop = true
+step = 0.01
+tracks/0/type = "value"
+tracks/0/path = NodePath("Score:margin_top")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.05, 0.06, 0.1 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ 10.0, 0.0, 0.0, 10.0 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Score:margin_bottom")
+tracks/1/interp = 2
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.05, 0.06, 0.1 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ 49.0, 39.0, 39.0, 49.0 ]
+}
+
+[node name="Game" type="Node" index="0"]
 
 script = ExtResource( 1 )
 
 [node name="Prongs" parent="." index="0" instance=ExtResource( 2 )]
 
 position = Vector2( 507.974, 313.527 )
+
+[node name="interface" type="CanvasLayer" parent="." index="1"]
+
+layer = 1
+offset = Vector2( 0, 0 )
+rotation = 0.0
+scale = Vector2( 1, 1 )
+transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+script = ExtResource( 3 )
+
+[node name="Score" type="Label" parent="interface" index="0"]
+
+anchor_left = 0.5
+anchor_top = 0.0
+anchor_right = 0.5
+anchor_bottom = 0.0
+margin_left = -43.0
+margin_top = 1.54297
+margin_right = 42.0
+margin_bottom = 40.543
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 4
+theme = ExtResource( 4 )
+text = "Score: 0"
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+script = ExtResource( 5 )
+_sections_unfolded = [ "Anchor", "Margin", "Theme" ]
+
+[node name="Tween" type="Tween" parent="interface" index="1"]
+
+repeat = false
+playback_process_mode = 1
+playback_speed = 1.0
+playback/active = false
+playback/repeat = false
+playback/speed = 1.0
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="interface" index="2"]
+
+root_node = NodePath("..")
+autoplay = ""
+playback_process_mode = 1
+playback_default_blend_time = 0.0
+playback_speed = 1.0
+anims/Change_Score = SubResource( 1 )
+blend_times = [  ]
+
+[node name="HBoxContainer" type="HBoxContainer" parent="interface" index="3"]
+
+anchor_left = 0.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+margin_top = -72.0
+margin_bottom = 72.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+alignment = 1
+_sections_unfolded = [ "Mouse" ]
+
+[node name="WinLose" type="Label" parent="interface/HBoxContainer" index="0"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 960.0
+margin_right = 960.0
+margin_bottom = 144.0
+grow_horizontal = 0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 4
+theme = ExtResource( 6 )
+align = 1
+valign = 1
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+script = ExtResource( 7 )
+_sections_unfolded = [ "Theme" ]
+
+[node name="Retry" type="Position2D" parent="interface" index="4"]
+
+editor/display_folded = true
+visible = false
+position = Vector2( 957.181, 704.271 )
+script = ExtResource( 8 )
+_sections_unfolded = [ "Visibility" ]
+
+[node name="RetryButton" type="Button" parent="interface/Retry" index="0"]
+
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -56.0
+margin_top = -61.0
+margin_right = 34.0
+margin_bottom = 32.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+toggle_mode = false
+enabled_focus_mode = 0
+shortcut = null
+group = null
+icon = ExtResource( 9 )
+flat = true
+align = 1
+_sections_unfolded = [ "Rect" ]
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="Next" type="Position2D" parent="interface" index="5"]
+
+editor/display_folded = true
+visible = false
+position = Vector2( 957.637, 704.637 )
+script = ExtResource( 10 )
+_sections_unfolded = [ "Transform" ]
+
+[node name="NextButton" type="Button" parent="interface/Next" index="0"]
+
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -66.0
+margin_top = -56.0
+margin_right = 46.0
+margin_bottom = 37.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+toggle_mode = false
+enabled_focus_mode = 0
+shortcut = null
+group = null
+icon = ExtResource( 11 )
+flat = true
+align = 1
+_sections_unfolded = [ "Rect" ]
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="NextContainer" type="VBoxContainer" parent="interface" index="6"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 130.0
+margin_top = 110.0
+margin_right = 200.0
+margin_bottom = 223.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 1
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+alignment = 0
+
+[node name="NextLabel" type="Label" parent="interface/NextContainer" index="0"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_right = 70.0
+margin_bottom = 39.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 4
+theme = ExtResource( 4 )
+text = "Next"
+align = 1
+valign = 1
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+_sections_unfolded = [ "Theme" ]
+
+[node name="Sprite" type="Sprite" parent="interface/NextContainer" index="1"]
+
+position = Vector2( 35, 50 )
+texture = ExtResource( 12 )
+offset = Vector2( 0, 80 )
+script = ExtResource( 13 )
+_sections_unfolded = [ "Offset", "Transform" ]
+
+[node name="ColorRect" type="ColorRect" parent="." index="2"]
+
+material = ExtResource( 14 )
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -3.0
+margin_top = -1.0
+margin_right = -3.0
+margin_bottom = -1.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+color = Color( 0, 0, 0, 1 )
+script = ExtResource( 15 )
+_sections_unfolded = [ "Material", "Mouse" ]
+
+[connection signal="score_changed" from="." to="interface" method="_on_score_changed"]
+
+[connection signal="set_pixelate" from="." to="ColorRect" method="_on_set_pixelate"]
+
+[connection signal="win_lose" from="." to="interface/HBoxContainer/WinLose" method="_on_text_changed"]
+
+[connection signal="score_changed" from="interface" to="interface/Score" method="_on_score_changed"]
+
+[connection signal="mouse_entered" from="interface/Retry/RetryButton" to="interface/Retry" method="_on_mouse_entered"]
+
+[connection signal="mouse_exited" from="interface/Retry/RetryButton" to="interface/Retry" method="_on_mouse_exited"]
+
+[connection signal="pressed" from="interface/Retry/RetryButton" to="." method="_on_RetryButton_pressed"]
+
+[connection signal="mouse_entered" from="interface/Next/NextButton" to="interface/Next" method="_on_mouse_entered"]
+
+[connection signal="mouse_exited" from="interface/Next/NextButton" to="interface/Next" method="_on_mouse_exited"]
+
+[connection signal="pressed" from="interface/Next/NextButton" to="." method="_on_NextButton_pressed"]
 
 

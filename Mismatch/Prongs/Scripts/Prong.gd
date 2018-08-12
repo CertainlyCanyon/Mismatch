@@ -1,5 +1,7 @@
 extends Position2D
 
+const MATCH_SCORE = 150
+
 var center
 var max_length = 400
 var length = max_length
@@ -8,7 +10,7 @@ var shapes = []
 var shrink_speed = 25 # this is in pixels/second
 var lose_dist = 0
 
-var pause = false
+var pause = true
 
 func _ready():
 	# Called when the node is added to the scene for the first time.
@@ -68,6 +70,7 @@ func check_collision(shape, position, distance, lengthen): #check if the collidi
 		if(position > 0 && shapes.size() > position && shape.get_id() + shapes[position-1].get_id() == 0): #if the shapes combine destroy both of them
 			#shapes.[position+1] .queue_free()
 			lengthen(lengthen)
+			get_node("/root/Game").add_score(MATCH_SCORE)
 			var remove_shape = shapes[position-1]
 			shapes.remove(position-1)
 			remove_shape.queue_free()
@@ -88,6 +91,9 @@ func get_length():
 	
 func pause(pause_bool, param):
 	pause = pause_bool
+	get_node("Sprite/Left").scale.y = (length/3)
+	get_node("Sprite/Right").scale.y = (length/3)
+	get_node("Sprite/Middle").scale.y = (length/3)
 	for child in get_children():
 		if(child.has_method("pause")):
 			child.pause(pause_bool, param)
@@ -104,3 +110,4 @@ func lengthen(amount):
 	get_node("Sprite").position.y -= add/2
 	for s in shapes:
 		s.set_position(s.get_position() + get_top_position(10).normalized() * add)
+		

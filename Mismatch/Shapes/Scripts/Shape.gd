@@ -1,5 +1,7 @@
 extends Sprite
 
+const SHAPE_SCORE = 50
+
 var inlet = preload("res://Shapes/Sprites/Inlet.png")
 var hole = preload("res://Shapes/Sprites/Hole.png")
 var outlet = preload("res://Shapes/Sprites/Outlet.png")
@@ -37,30 +39,36 @@ func init(width):
 		
 	scale *= width/texture.get_width()
 	distance = (texture.get_height()*scale.y)/2
+	return scale
 
 func _process(delta):
-	if(!pause):
-		if(active): # if this shape is being shot, look at the mouse
-			var mouse = get_viewport().get_mouse_position()
-			look_at(mouse)
-		if(speed > 0): # if its moving ask where to move to and accelerat there
-			var top = target.get_top_position(distance) # + texture.get_height()/2
-			var vector = (top - position)
-			var motion_vector = vector.normalized()
-			speed += 80
-			if(vector.length() < 50): #stop when it gets close
-				position = top
-				speed = 0
-				target.lengthen(texture.get_height()*scale.y)
-				var remove = target.check_collision(self, stack_pos, distance, texture.get_height()*scale.y)
-				target.check_win()
-			position += motion_vector * speed * delta
-			#position = target.position
-		elif(speed != -1):
-			position -= target.get_top_position(distance).normalized() * target.get_speed() * delta
-			if(distance  + texture.get_height()*scale.y/2 > target.get_length()):
-				get_node("/root/Game").lose()
-		
+	#print(target)
+	if(str(target)=="[Deleted Object]"):
+		free()
+	else:
+		if(!pause):
+			if(active): # if this shape is being shot, look at the mouse
+				var mouse = get_viewport().get_mouse_position()
+				look_at(mouse)
+			if(speed > 0): # if its moving ask where to move to and accelerat there
+				var top = target.get_top_position(distance) # + texture.get_height()/2
+				var vector = (top - position)
+				var motion_vector = vector.normalized()
+				speed += 80
+				if(vector.length() < 50): #stop when it gets close
+					position = top
+					speed = 0
+					target.lengthen(texture.get_height()*scale.y)
+					get_node("/root/Game").add_score(SHAPE_SCORE)
+					var remove = target.check_collision(self, stack_pos, distance, texture.get_height()*scale.y)
+					target.check_win()
+				position += motion_vector * speed * delta
+				#position = target.position
+			elif(speed != -1):
+				position -= target.get_top_position(distance).normalized() * target.get_speed() * delta
+				if(distance  + texture.get_height()*scale.y/2 > target.get_length()):
+					get_node("/root/Game").lose()
+			
 	
 func shoot_at(object, number): # sets the prong this shape was shot at and sets the distance from the end
 	stack_pos = number
