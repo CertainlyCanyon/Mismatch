@@ -7,6 +7,8 @@ var hole = preload("res://Shapes/Sprites/Hole.png")
 var outlet = preload("res://Shapes/Sprites/Outlet.png")
 var circle = preload("res://Shapes/Sprites/Circle.png")
 
+var particle = preload("res://Particles.tscn")
+
 var active = false
 var target = null
 var speed = -1;
@@ -91,3 +93,11 @@ func pause(pause_bool, param):
 func shapes_removed():
 	distance -= texture.get_height()*scale.y*2
 	speed = 80
+	
+func kill():
+	var part = particle.instance()
+	get_parent().add_child(part)
+	part.init(position);
+	#get_node("/root/Game").add_child(part)
+	#part.init(get_global_transform().get_origin())
+	queue_free()

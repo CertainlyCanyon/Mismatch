@@ -1,20 +1,30 @@
-[gd_scene load_steps=17 format=2]
+[gd_scene load_steps=28 format=2]
 
 [ext_resource path="res://Game.gd" type="Script" id=1]
 [ext_resource path="res://Prongs/Prongs.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Interface/interface.gd" type="Script" id=3]
 [ext_resource path="res://Fonts/Score_Theme.tres" type="Theme" id=4]
 [ext_resource path="res://Interface/Score.gd" type="Script" id=5]
-[ext_resource path="res://Fonts/Win_Lose_Theme.tres" type="Theme" id=6]
-[ext_resource path="res://Interface/WinLose.gd" type="Script" id=7]
-[ext_resource path="res://Interface/RetryButton.gd" type="Script" id=8]
-[ext_resource path="res://Interface/RetryIcon.png" type="Texture" id=9]
-[ext_resource path="res://Interface/NextButton.gd" type="Script" id=10]
-[ext_resource path="res://Interface/NextIcon.png" type="Texture" id=11]
-[ext_resource path="res://Interface/Next_Container.png" type="Texture" id=12]
-[ext_resource path="res://Interface/Next_Box.gd" type="Script" id=13]
-[ext_resource path="res://Prongs/pixel_material.tres" type="Material" id=14]
-[ext_resource path="res://Shader_Rect.gd" type="Script" id=15]
+[ext_resource path="res://Interface/3.png" type="Texture" id=6]
+[ext_resource path="res://Interface/2.png" type="Texture" id=7]
+[ext_resource path="res://Interface/1.png" type="Texture" id=8]
+[ext_resource path="res://Interface/Go.png" type="Texture" id=9]
+[ext_resource path="res://Fonts/Win_Lose_Theme.tres" type="Theme" id=10]
+[ext_resource path="res://Interface/WinLose.gd" type="Script" id=11]
+[ext_resource path="res://Interface/RetryButton.gd" type="Script" id=12]
+[ext_resource path="res://Interface/RetryIcon.png" type="Texture" id=13]
+[ext_resource path="res://Interface/QuitButton.gd" type="Script" id=14]
+[ext_resource path="res://button_pos.gd" type="Script" id=15]
+[ext_resource path="res://Interface/Close.png" type="Texture" id=16]
+[ext_resource path="res://Interface/NextButton.gd" type="Script" id=17]
+[ext_resource path="res://Interface/NextIcon.png" type="Texture" id=18]
+[ext_resource path="res://Interface/Next_Container.png" type="Texture" id=19]
+[ext_resource path="res://Interface/Next_Box.gd" type="Script" id=20]
+[ext_resource path="res://Countdown.gd" type="Script" id=21]
+[ext_resource path="res://Prongs/pixel_material.tres" type="Material" id=22]
+[ext_resource path="res://Shader_Rect.gd" type="Script" id=23]
+[ext_resource path="res://Audio/Music/backround_1.ogg" type="AudioStream" id=24]
+[ext_resource path="res://Audio/Music/backround_2.ogg" type="AudioStream" id=25]
 
 [sub_resource type="Animation" id=1]
 
@@ -23,7 +33,7 @@ length = 0.11
 loop = true
 step = 0.01
 tracks/0/type = "value"
-tracks/0/path = NodePath("Score:margin_top")
+tracks/0/path = NodePath("Score_Contatiner:margin_top")
 tracks/0/interp = 2
 tracks/0/loop_wrap = true
 tracks/0/imported = false
@@ -35,7 +45,7 @@ tracks/0/keys = {
 "values": [ 10.0, 0.0, 0.0, 10.0 ]
 }
 tracks/1/type = "value"
-tracks/1/path = NodePath("Score:margin_bottom")
+tracks/1/path = NodePath("Score_Contatiner/Score:margin_bottom")
 tracks/1/interp = 2
 tracks/1/loop_wrap = true
 tracks/1/imported = false
@@ -45,6 +55,49 @@ tracks/1/keys = {
 "transitions": PoolRealArray( 1, 1, 1, 1 ),
 "update": 0,
 "values": [ 49.0, 39.0, 39.0, 49.0 ]
+}
+
+[sub_resource type="Animation" id=2]
+
+resource_name = "CountDown"
+length = 4.1
+loop = false
+step = 0.1
+tracks/0/type = "value"
+tracks/0/path = NodePath("Countdown:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.9, 1, 1.9, 2, 2.9, 3, 4, 4.1 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ true, false, true, false, true, false, true, false, false ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Countdown:scale")
+tracks/1/interp = 2
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.9, 1, 1.9, 2, 2.9, 3, 4 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 1, 1 ), Vector2( 1.5, 1.5 ), Vector2( 1, 1 ), Vector2( 1.5, 1.5 ), Vector2( 1, 1 ), Vector2( 1.5, 1.5 ), Vector2( 1, 1 ), Vector2( 1.5, 1.5 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Countdown:texture")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.9, 1.9, 2.9, 2.9, 3, 4 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ ExtResource( 6 ), ExtResource( 7 ), ExtResource( 8 ), ExtResource( 9 ), ExtResource( 8 ), ExtResource( 9 ), ExtResource( 9 ) ]
 }
 
 [node name="Game" type="Node" index="0"]
@@ -64,16 +117,31 @@ scale = Vector2( 1, 1 )
 transform = Transform2D( 1, 0, 0, 1, 0, 0 )
 script = ExtResource( 3 )
 
-[node name="Score" type="Label" parent="interface" index="0"]
+[node name="Score_Contatiner" type="HBoxContainer" parent="interface" index="0"]
 
-anchor_left = 0.5
+anchor_left = 0.0
 anchor_top = 0.0
-anchor_right = 0.5
+anchor_right = 1.0
 anchor_bottom = 0.0
-margin_left = -43.0
-margin_top = 1.54297
-margin_right = 42.0
-margin_bottom = 40.543
+margin_bottom = 71.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 1
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+alignment = 1
+
+[node name="Score" type="Label" parent="interface/Score_Contatiner" index="0"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 917.0
+margin_top = 16.0
+margin_right = 1002.0
+margin_bottom = 55.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
 mouse_filter = 2
@@ -105,6 +173,7 @@ playback_process_mode = 1
 playback_default_blend_time = 0.0
 playback_speed = 1.0
 anims/Change_Score = SubResource( 1 )
+anims/CountDown = SubResource( 2 )
 blend_times = [  ]
 
 [node name="HBoxContainer" type="HBoxContainer" parent="interface" index="3"]
@@ -140,13 +209,13 @@ mouse_filter = 2
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
 size_flags_vertical = 4
-theme = ExtResource( 6 )
+theme = ExtResource( 10 )
 align = 1
 valign = 1
 percent_visible = 1.0
 lines_skipped = 0
 max_lines_visible = -1
-script = ExtResource( 7 )
+script = ExtResource( 11 )
 _sections_unfolded = [ "Theme" ]
 
 [node name="Retry" type="Position2D" parent="interface" index="4"]
@@ -154,7 +223,7 @@ _sections_unfolded = [ "Theme" ]
 editor/display_folded = true
 visible = false
 position = Vector2( 957.181, 704.271 )
-script = ExtResource( 8 )
+script = ExtResource( 12 )
 _sections_unfolded = [ "Visibility" ]
 
 [node name="RetryButton" type="Button" parent="interface/Retry" index="0"]
@@ -177,7 +246,7 @@ toggle_mode = false
 enabled_focus_mode = 0
 shortcut = null
 group = null
-icon = ExtResource( 9 )
+icon = ExtResource( 13 )
 flat = true
 align = 1
 _sections_unfolded = [ "Rect" ]
@@ -185,12 +254,57 @@ __meta__ = {
 "_edit_lock_": true
 }
 
-[node name="Next" type="Position2D" parent="interface" index="5"]
+[node name="Quit" type="Position2D" parent="interface" index="5"]
+
+editor/display_folded = true
+visible = false
+position = Vector2( 957.181, 874.271 )
+script = ExtResource( 14 )
+_sections_unfolded = [ "Visibility" ]
+
+[node name="button_pos" type="Position2D" parent="interface/Quit" index="0"]
+
+scale = Vector2( 0.75, 0.75 )
+script = ExtResource( 15 )
+_sections_unfolded = [ "Transform" ]
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="QuitButton" type="Button" parent="interface/Quit/button_pos" index="0"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = -56.0
+margin_top = -53.0
+margin_right = 56.0
+margin_bottom = 53.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+toggle_mode = false
+enabled_focus_mode = 2
+shortcut = null
+group = null
+icon = ExtResource( 16 )
+flat = true
+align = 1
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="Next" type="Position2D" parent="interface" index="6"]
 
 editor/display_folded = true
 visible = false
 position = Vector2( 957.637, 704.637 )
-script = ExtResource( 10 )
+script = ExtResource( 17 )
 _sections_unfolded = [ "Transform" ]
 
 [node name="NextButton" type="Button" parent="interface/Next" index="0"]
@@ -213,7 +327,7 @@ toggle_mode = false
 enabled_focus_mode = 0
 shortcut = null
 group = null
-icon = ExtResource( 11 )
+icon = ExtResource( 18 )
 flat = true
 align = 1
 _sections_unfolded = [ "Rect" ]
@@ -221,7 +335,7 @@ __meta__ = {
 "_edit_lock_": true
 }
 
-[node name="NextContainer" type="VBoxContainer" parent="interface" index="6"]
+[node name="NextContainer" type="VBoxContainer" parent="interface" index="7"]
 
 anchor_left = 0.0
 anchor_top = 0.0
@@ -238,6 +352,7 @@ mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
 size_flags_vertical = 1
 alignment = 0
+_sections_unfolded = [ "Size Flags" ]
 
 [node name="NextLabel" type="Label" parent="interface/NextContainer" index="0"]
 
@@ -265,14 +380,35 @@ _sections_unfolded = [ "Theme" ]
 [node name="Sprite" type="Sprite" parent="interface/NextContainer" index="1"]
 
 position = Vector2( 35, 50 )
-texture = ExtResource( 12 )
+texture = ExtResource( 19 )
 offset = Vector2( 0, 80 )
-script = ExtResource( 13 )
+script = ExtResource( 20 )
 _sections_unfolded = [ "Offset", "Transform" ]
+
+[node name="Timer" type="Timer" parent="interface" index="8"]
+
+process_mode = 1
+wait_time = 1.0
+one_shot = false
+autostart = false
+
+[node name="Countdown" type="Sprite" parent="interface" index="9"]
+
+position = Vector2( 960, 210 )
+texture = ExtResource( 6 )
+script = ExtResource( 21 )
+_sections_unfolded = [ "Transform", "Visibility" ]
+
+[node name="animation_timer" type="Timer" parent="interface" index="10"]
+
+process_mode = 1
+wait_time = 1.0
+one_shot = false
+autostart = false
 
 [node name="ColorRect" type="ColorRect" parent="." index="2"]
 
-material = ExtResource( 14 )
+material = ExtResource( 22 )
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 1.0
@@ -281,6 +417,7 @@ margin_left = -3.0
 margin_top = -1.0
 margin_right = -3.0
 margin_bottom = -1.0
+rect_scale = Vector2( 2, 2 )
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
 mouse_filter = 2
@@ -288,8 +425,35 @@ mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
 size_flags_vertical = 1
 color = Color( 0, 0, 0, 1 )
-script = ExtResource( 15 )
-_sections_unfolded = [ "Material", "Mouse" ]
+script = ExtResource( 23 )
+_sections_unfolded = [ "Material", "Mouse", "Rect" ]
+
+[node name="SFX" type="AudioStreamPlayer" parent="." index="3"]
+
+stream = null
+volume_db = -20.0
+pitch_scale = 1.0
+autoplay = false
+mix_target = 0
+bus = "Master"
+
+[node name="Backround1" type="AudioStreamPlayer" parent="." index="4"]
+
+stream = ExtResource( 24 )
+volume_db = -20.0
+pitch_scale = 1.0
+autoplay = false
+mix_target = 0
+bus = "Master"
+
+[node name="Backround2" type="AudioStreamPlayer" parent="." index="5"]
+
+stream = ExtResource( 25 )
+volume_db = -20.0
+pitch_scale = 1.0
+autoplay = false
+mix_target = 0
+bus = "Master"
 
 [connection signal="score_changed" from="." to="interface" method="_on_score_changed"]
 
@@ -297,7 +461,7 @@ _sections_unfolded = [ "Material", "Mouse" ]
 
 [connection signal="win_lose" from="." to="interface/HBoxContainer/WinLose" method="_on_text_changed"]
 
-[connection signal="score_changed" from="interface" to="interface/Score" method="_on_score_changed"]
+[connection signal="score_changed" from="interface" to="interface/Score_Contatiner/Score" method="_on_score_changed"]
 
 [connection signal="mouse_entered" from="interface/Retry/RetryButton" to="interface/Retry" method="_on_mouse_entered"]
 
@@ -305,10 +469,24 @@ _sections_unfolded = [ "Material", "Mouse" ]
 
 [connection signal="pressed" from="interface/Retry/RetryButton" to="." method="_on_RetryButton_pressed"]
 
+[connection signal="mouse_entered" from="interface/Quit/button_pos/QuitButton" to="interface/Quit" method="_on_mouse_entered"]
+
+[connection signal="mouse_exited" from="interface/Quit/button_pos/QuitButton" to="interface/Quit" method="_on_mouse_exited"]
+
+[connection signal="pressed" from="interface/Quit/button_pos/QuitButton" to="." method="_on_QuitButton_pressed"]
+
 [connection signal="mouse_entered" from="interface/Next/NextButton" to="interface/Next" method="_on_mouse_entered"]
 
 [connection signal="mouse_exited" from="interface/Next/NextButton" to="interface/Next" method="_on_mouse_exited"]
 
 [connection signal="pressed" from="interface/Next/NextButton" to="." method="_on_NextButton_pressed"]
+
+[connection signal="timeout" from="interface/Timer" to="." method="_on_Timer_timeout"]
+
+[connection signal="timeout" from="interface/animation_timer" to="interface/Countdown" method="_on_animation_timer_timeout"]
+
+[connection signal="finished" from="Backround1" to="." method="_on_Backround1_finished"]
+
+[connection signal="finished" from="Backround2" to="." method="_on_Backround2_finished"]
 
 

@@ -7,6 +7,8 @@ var number_of_prongs = 3
 var width
 var pause = true
 
+var timer = 0
+
 var shape_width = 0
 
 var current_shape
@@ -21,7 +23,7 @@ func reset(number):
 		p.queue_free()
 		
 	for s in get_node("Shapes").get_children():
-		s.queue_free()
+		s.free()
 	
 	if number == -1:
 		number_of_prongs += 1
@@ -47,8 +49,10 @@ func _ready():
 	
 func _process(delta):
 	# Called every frame. Delta is time since last frame.
-	if(!pause):
-		pass
+	if(!pause && number_of_prongs > 3):
+		timer += delta*4
+		scale.x = abs(sin(timer))/16 + 1
+		scale.y = abs(sin(timer))/16 + 1
 	#rotation += .01
 	pass
 
@@ -101,6 +105,13 @@ func check_win():
 
 func pause(pause_bool, param):
 	pause = pause_bool
-	for child in get_children():
-		if(child.has_method("pause")):
-			child.pause(pause_bool, param)
+	if(param == false):
+		current_shape.pause(true, null)
+	else:
+		for child in get_children():
+			if(child.has_method("pause")):
+				child.pause(pause_bool, param)
+			
+func set_prong_speed(speed):
+	for p in get_node("Prongs").get_children():
+		p.shrink_speed = speed

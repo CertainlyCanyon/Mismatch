@@ -46,10 +46,20 @@ texture = ExtResource( 4 )
 
 visible = false
 shape = SubResource( 1 )
+_sections_unfolded = [ "Transform" ]
 
 [node name="Shapes" type="Node" parent="." index="1"]
 
 script = ExtResource( 2 )
+
+[node name="SFX" type="AudioStreamPlayer" parent="." index="2"]
+
+stream = null
+volume_db = -20.0
+pitch_scale = 1.0
+autoplay = false
+mix_target = 0
+bus = "Master"
 
 [connection signal="input_event" from="Sprite" to="." method="_on_Sprite_input_event"]
 

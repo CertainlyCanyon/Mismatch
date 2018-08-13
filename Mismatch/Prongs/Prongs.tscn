@@ -1,21 +1,44 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://Prongs/Sprites/ProngCenter.png" type="Texture" id=1]
 [ext_resource path="res://Prongs/Scripts/Prongs.gd" type="Script" id=2]
-[ext_resource path="res://Pause.gd" type="Script" id=3]
+[ext_resource path="res://Prongs/Scripts/Controller.gd" type="Script" id=3]
+[ext_resource path="res://Pause.gd" type="Script" id=4]
 
-[node name="Prongs" type="Sprite" index="0"]
+[node name="Prongs" type="Sprite"]
 
 texture = ExtResource( 1 )
 script = ExtResource( 2 )
 _sections_unfolded = [ "Material", "Visibility" ]
 
-[node name="Prongs" type="Node2D" parent="." index="0"]
+[node name="Controller" type="Node2D" parent="." index="0"]
 
 script = ExtResource( 3 )
 
-[node name="Shapes" type="Node2D" parent="." index="1"]
+[node name="Rotation_Timer" type="Timer" parent="Controller" index="0"]
 
-script = ExtResource( 3 )
+process_mode = 1
+wait_time = 1.0
+one_shot = false
+autostart = false
+
+[node name="Color_Timer" type="Timer" parent="Controller" index="1"]
+
+process_mode = 1
+wait_time = 1.0
+one_shot = false
+autostart = false
+
+[node name="Prongs" type="Node2D" parent="." index="1"]
+
+script = ExtResource( 4 )
+
+[node name="Shapes" type="Node2D" parent="." index="2"]
+
+script = ExtResource( 4 )
+
+[connection signal="timeout" from="Controller/Rotation_Timer" to="Controller" method="_on_Rotation_Timer_timeout"]
+
+[connection signal="timeout" from="Controller/Color_Timer" to="Controller" method="_on_Color_Timer_timeout"]
 
 

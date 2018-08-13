@@ -1,0 +1,234 @@
+[gd_scene load_steps=10 format=2]
+
+[ext_resource path="res://Tutorial/Tutorial.gd" type="Script" id=1]
+[ext_resource path="res://Fonts/Score_Theme.tres" type="Theme" id=2]
+[ext_resource path="res://Tutorial/InstructionsLabel.gd" type="Script" id=3]
+[ext_resource path="res://Fonts/Timer_Theme.tres" type="Theme" id=4]
+[ext_resource path="res://Interface/Next_Container.png" type="Texture" id=5]
+[ext_resource path="res://Tutorial/Next_Box_Tut.gd" type="Script" id=6]
+[ext_resource path="res://Prongs/pixel_material.tres" type="Material" id=7]
+[ext_resource path="res://Tutorial/Shader_Rect_Tut.gd" type="Script" id=8]
+[ext_resource path="res://Tutorial/Score_tut.gd" type="Script" id=9]
+
+[node name="Game" type="Node2D"]
+
+script = ExtResource( 1 )
+
+[node name="interface" type="CanvasLayer" parent="." index="0"]
+
+layer = 1
+offset = Vector2( 0, 0 )
+rotation = 0.0
+scale = Vector2( 1, 1 )
+transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+
+[node name="HBoxContainer" type="HBoxContainer" parent="interface" index="0"]
+
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+margin_left = -960.0
+margin_top = -209.0
+margin_right = 960.0
+margin_bottom = -170.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 1
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+alignment = 1
+
+[node name="InstructionLabel" type="Label" parent="interface/HBoxContainer" index="0"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 960.0
+margin_right = 960.0
+margin_bottom = 39.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 4
+theme = ExtResource( 2 )
+align = 1
+valign = 1
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+script = ExtResource( 3 )
+_sections_unfolded = [ "Theme" ]
+
+[node name="Tween" type="Tween" parent="interface/HBoxContainer/InstructionLabel" index="0"]
+
+repeat = false
+playback_process_mode = 1
+playback_speed = 1.0
+playback/active = false
+playback/repeat = false
+playback/speed = 1.0
+
+[node name="Timer" type="Timer" parent="interface/HBoxContainer/InstructionLabel" index="1"]
+
+process_mode = 1
+wait_time = 1.0
+one_shot = false
+autostart = false
+
+[node name="Timer2" type="Timer" parent="interface/HBoxContainer/InstructionLabel" index="2"]
+
+process_mode = 1
+wait_time = 1.0
+one_shot = false
+autostart = false
+
+[node name="Skip_Button" type="Button" parent="interface" index="1"]
+
+anchor_left = 0.5
+anchor_top = 0.0
+anchor_right = 0.5
+anchor_bottom = 0.0
+margin_left = -240.0
+margin_right = 240.0
+margin_bottom = 150.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+theme = ExtResource( 4 )
+toggle_mode = false
+enabled_focus_mode = 2
+shortcut = null
+group = null
+text = "Skip Tutorial"
+flat = true
+align = 1
+_sections_unfolded = [ "Theme" ]
+
+[node name="NextContainer" type="VBoxContainer" parent="interface" index="2"]
+
+visible = false
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 130.0
+margin_top = 110.0
+margin_right = 200.0
+margin_bottom = 223.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 1
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+alignment = 0
+
+[node name="NextLabel" type="Label" parent="interface/NextContainer" index="0"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_right = 70.0
+margin_bottom = 39.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 4
+theme = ExtResource( 2 )
+text = "Next"
+align = 1
+valign = 1
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+_sections_unfolded = [ "Margin", "Theme" ]
+
+[node name="Sprite" type="Sprite" parent="interface/NextContainer" index="1"]
+
+position = Vector2( 35, 50 )
+texture = ExtResource( 5 )
+offset = Vector2( 0, 80 )
+script = ExtResource( 6 )
+_sections_unfolded = [ "Offset", "Transform" ]
+
+[node name="ColorRect" type="ColorRect" parent="." index="1"]
+
+visible = false
+material = ExtResource( 7 )
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -3.0
+margin_top = -1.0
+margin_right = -3.0
+margin_bottom = -1.0
+rect_scale = Vector2( 2, 2 )
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+color = Color( 0, 0, 0, 1 )
+script = ExtResource( 8 )
+_sections_unfolded = [ "Material", "Mouse", "Rect" ]
+
+[node name="Score_Contatiner" type="HBoxContainer" parent="." index="2"]
+
+visible = false
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 1.0
+anchor_bottom = 0.0
+margin_bottom = 71.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 1
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+alignment = 1
+
+[node name="Score" type="Label" parent="Score_Contatiner" index="0"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_top = 16.0
+margin_right = 85.0
+margin_bottom = 55.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 4
+theme = ExtResource( 2 )
+text = "Score: 0"
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+script = ExtResource( 9 )
+_sections_unfolded = [ "Anchor", "Margin", "Theme" ]
+
+[connection signal="timeout" from="interface/HBoxContainer/InstructionLabel/Timer" to="interface/HBoxContainer/InstructionLabel" method="_on_Timer_timeout"]
+
+[connection signal="timeout" from="interface/HBoxContainer/InstructionLabel/Timer2" to="interface/HBoxContainer/InstructionLabel" method="_on_Timer2_timeout"]
+
+[connection signal="pressed" from="interface/Skip_Button" to="interface/HBoxContainer/InstructionLabel" method="_on_Skip_Button_pressed"]
+
+

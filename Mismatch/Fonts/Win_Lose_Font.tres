@@ -8,5 +8,5 @@ size = 120
 use_mipmaps = true
 use_filter = true
 font_data = ExtResource( 1 )
-_sections_unfolded = [ "Font" ]
+_sections_unfolded = [ "Settings" ]
 
